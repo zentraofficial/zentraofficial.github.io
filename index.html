@@ -1,1 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canlı TV</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body { margin: 0; background: #000; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; }
+        video { width: 100%; height: auto; }
+        #play-btn { padding: 15px 30px; background: red; border: none; color: white; font-weight: bold; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <button id="play-btn">YAYINI BAŞLAT</button>
+    <video id="video" controls playsinline></video>
 
+    <script>
+        const video = document.getElementById('video');
+        const btn = document.getElementById('play-btn');
+        const source = 'https://tv-trtspor.live.trt.com.tr/master.m3u8';
+
+        btn.onclick = () => {
+            btn.style.display = 'none';
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(source);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            }
+        };
+    </script>
+</body>
+</html>
